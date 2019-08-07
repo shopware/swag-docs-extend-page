@@ -1,0 +1,32 @@
+{
+    "name": "swag/extend-page",
+    "description": "Example plugin to add data to storefront pages",
+    "version": "v1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "shopware AG"
+        }
+    ],
+    "require": {
+        "shopware/core": "*",
+        "shopware/storefront": "*"
+    },
+    "extra": {
+        "shopware-plugin-class": "Swag\\ExtendPage\\ExtendPage",
+        "label": {
+            "de-DE": "Label für das Plugin ExtendPage",
+            "en-GB": "Label for the plugin ExtendPage"
+        },
+        "description": {
+            "de-DE": "Beschreibung für das Plugin ExtendPage",
+            "en-GB": "Description for the plugin ExtendPage"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Swag\\ExtendPage\\": "src/"
+        }
+    }
+}
