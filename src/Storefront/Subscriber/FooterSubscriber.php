@@ -3,8 +3,8 @@
 namespace Swag\ExtendPage\Storefront\Subscriber;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Aggregation\CountAggregation;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\AggregationResult\CountResult;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Aggregation\Metric\CountAggregation;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\AggregationResult\Metric\CountResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Storefront\Pagelet\Footer\FooterPageletLoadedEvent;
@@ -33,14 +33,13 @@ class FooterSubscriber implements EventSubscriberInterface
     {
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('product.active', true));
-        $criteria->addAggregation(new CountAggregation('product.id', 'productCount'));
+        $criteria->addAggregation(new CountAggregation('productCount', 'product.id'));
 
         /** @var CountResult $productCountResult */
         $productCountResult = $this->productRepository
-            ->aggregate($criteria, $event->getContext())
+            ->search($criteria, $event->getContext())
             ->getAggregations()
-            ->get('productCount')
-            ->getResult()[0];
+            ->get('productCount');
 
         $event->getPagelet()->addExtension('product_count', $productCountResult);
     }
